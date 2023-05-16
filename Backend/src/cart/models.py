@@ -1,13 +1,11 @@
 from django.db import models
-from uuid import uuid4
+from catalog.models import Product
 
 
 class Cart(models.Model):
-    id = models.AutoField(primary_key=True, default=1000000)
-    #goods = models.ForeignKey
+    goods = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='cart_goods')
 
 
 class WishList(models.Model):
-    id = models.AutoField(primary_key=True, default=1000000)
     # user = models.ForeignKey
-    # goods = models.ForeignKey
+    goods = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='wishlist_goods')

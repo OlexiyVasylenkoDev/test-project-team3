@@ -1,10 +1,10 @@
-DATABASE = "simpledbmamager"
+# DATABASE = "simpledbmamager"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': 'postgres',
+        'PASSWORD': 'bogdan13',
         'HOST': 'localhost',
         'PORT': '5432',
     }

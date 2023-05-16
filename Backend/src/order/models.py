@@ -1,4 +1,10 @@
 from django.db import models
+from catalog.models import Product
+
+
+class OrderItem(models.Model):
+    goods = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='order_item_goods')
+    quantity = models.IntegerField(default=1)
 
 
 class Order(models.Model):
@@ -10,9 +16,4 @@ class Order(models.Model):
     address = models.TextField()
     ordered_at = models.DateTimeField(auto_now_add=True)
     closed_at = models.DateTimeField(blank=True)
-
-
-class OrderItem(models.Model):
-    #goods
-    quantity = models.IntegerField(default=1)
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    order_items = models.ForeignKey(OrderItem, on_delete=models.CASCADE, related_name='order_items')

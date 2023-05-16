@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 django = "*"
+psycopg2 = "*"
 
 [dev-packages]
 
@@ -12,8 +13,8 @@ django = "*"
 python_version = "3.10"
 
 [scripts]
-dev-server = "python manage.py runserver"
-make-migrations = "python manage.py makemigrations"
-migrate = "python manage.py migrate"
-createsuperuser = "python manage.py createsuperuser"
-shell = "python manage.py shell_plus"
+dev-server = "python src/manage.py runserver"
+make-migrations = "python src/manage.py makemigrations"
+migrate = "python src/manage.py migrate"
+createsuperuser = "python src/manage.py createsuperuser"
+shell = "python src/manage.py shell_plus"

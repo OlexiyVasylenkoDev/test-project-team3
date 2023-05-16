@@ -41,6 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'psycopg2',
+    'catalog',
+    'order',
+    'cart'
     'core',
     'phonenumber_field',
 ]
@@ -79,10 +83,20 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+
+try:
+    from local_settings import *
+except ImportError:
+    pass
+# DATABASE = "simpledbmamager"
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'bogdan13',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 

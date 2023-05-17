@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'drf_yasg',
+    'rest_framework',
     'psycopg2',
     'cart',
     'catalog',
@@ -94,7 +96,7 @@ except ImportError:
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
+        'NAME': 'test',
         'USER': 'postgres',
         'PASSWORD': 'admin',
         'HOST': 'localhost',

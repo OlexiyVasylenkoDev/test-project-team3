@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from requests import Response
-from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, RetrieveAPIView, DestroyAPIView
 from rest_framework.permissions import IsAdminUser
 from rest_framework.viewsets import ModelViewSet
 
@@ -17,17 +17,43 @@ class BaseCategoryView:
     serializer_class = CategorySerializer
 
 
-class CategoryViewSet(BaseCategoryView, ModelViewSet, ):
+class CategoryView(BaseCategoryView, ListAPIView, ):
     pass
 
 
+class CreateCategoryView(BaseCategoryView, CreateAPIView):
+    permission_classes = [IsAdminUser, ]
+
+
 class UpdateCategoryView(BaseCategoryView, UpdateAPIView):
-    permission_classes = [IsAdminUser, IsSeller, ]
+    permission_classes = [IsAdminUser, ]
+
+
+class DeleteCategoryView(BaseCategoryView, DestroyAPIView):
+    permission_classes = [IsAdminUser, ]
 
 
 class BaseProductView:
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+
+class ProductView(BaseProductView, ListAPIView, ):
+    pass
+
+
+class CreateProductView(BaseProductView, CreateAPIView):
+    permission_classes = [IsSeller, ]
+
+
+
+
+class UpdateProductView(BaseProductView, UpdateAPIView):
+    permission_classes = [IsProductSeller, ]
+
+
+class DeleteProductView(BaseProductView, DestroyAPIView):
+    permission_classes = [IsSeller, ]
 
 
 class ProductViewSet(BaseProductView, ModelViewSet, ):

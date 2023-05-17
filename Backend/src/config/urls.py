@@ -20,8 +20,8 @@ from rest_framework import permissions, routers
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from catalog.views import CategoryViewSet, ProductViewSet, ProductByCategory, CreateProductView, CreateCategoryView, \
-    UpdateCategoryView, UpdateProductView
+from catalog.views import CategoryView, ProductViewSet, ProductByCategory, UpdateCategoryView, UpdateProductView, \
+    CreateCategoryView, DeleteCategoryView, CreateProductView, DeleteProductView, ProductView
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -37,20 +37,24 @@ schema_view = get_schema_view(
 )
 
 router = routers.DefaultRouter()
-router.register(r'categories', CategoryViewSet)
-router.register(r'products', ProductViewSet)
+# router.register(r'categories', CategoryViewSet)
+# router.register(r'products', ProductViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
 
+    path('categories/', CategoryView.as_view(), name="category"),
     path('categories/create/', CreateCategoryView.as_view(), name="create category"),
     path('categories/update/<int:pk>/', UpdateCategoryView.as_view(), name="update category"),
+    path('categories/delete/<int:pk>/', DeleteCategoryView.as_view(), name="delete category"),
     path('categories/<int:pk>/products/', ProductByCategory.as_view(), name="products by category"),
 
+    path('products/', ProductView.as_view(), name="product"),
     path('products/create/', CreateProductView.as_view(), name="create product"),
     path('products/update/<int:pk>/', UpdateProductView.as_view(), name="update product"),
+    path('products/delete/<int:pk>/', DeleteProductView.as_view(), name="delete product"),
 
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

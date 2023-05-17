@@ -42,10 +42,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'psycopg2',
+    'cart',
     'catalog',
-    'order',
-    'cart'
     'core',
+    'distribution',
+    'order',
+    'review',
     'phonenumber_field',
 ]
 
@@ -88,13 +90,13 @@ try:
     from local_settings import *
 except ImportError:
     pass
-# DATABASE = "simpledbmamager"
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': 'bogdan13',
+        'PASSWORD': 'admin',
         'HOST': 'localhost',
         'PORT': '5432',
     }

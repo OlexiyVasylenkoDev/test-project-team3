@@ -6,7 +6,6 @@ from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
 from phonenumber_field.modelfields import PhoneNumberField
-
 from core.managers import CustomUserManager
 
 

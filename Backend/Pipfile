@@ -9,6 +9,7 @@ psycopg2 = "*"
 django-phonenumber-field = {extras = ["phonenumbers"], version = "*"}
 pillow = "*"
 python-dotenv = "*"
+djangorestframework = "*"
 
 [dev-packages]
 

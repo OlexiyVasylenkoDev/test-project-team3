@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     'order',
     'review',
     'phonenumber_field',
-    'rest_framework',
 
 ]
 

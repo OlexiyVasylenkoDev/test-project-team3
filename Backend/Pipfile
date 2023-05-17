@@ -10,6 +10,7 @@ django-phonenumber-field = {extras = ["phonenumbers"], version = "*"}
 pillow = "*"
 python-dotenv = "*"
 djangorestframework = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 

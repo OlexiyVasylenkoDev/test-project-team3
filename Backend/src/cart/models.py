@@ -7,5 +7,5 @@ class Cart(models.Model):
 
 
 class WishList(models.Model):
-    # user = models.ForeignKey
+    user = models.ForeignKey
     goods = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='wishlist_goods')

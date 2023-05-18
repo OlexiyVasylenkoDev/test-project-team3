@@ -11,6 +11,7 @@ pillow = "*"
 python-dotenv = "*"
 djangorestframework = "*"
 drf-yasg = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 

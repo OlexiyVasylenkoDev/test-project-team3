@@ -16,13 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.urls import path, re_path, include
 from rest_framework import permissions, routers
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from catalog.views import CategoryView, ProductViewSet, ProductByCategory, UpdateCategoryView, UpdateProductView, \
-    CreateCategoryView, DeleteCategoryView, CreateProductView, DeleteProductView, ProductView
+from catalog.urls import router
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -36,10 +34,6 @@ schema_view = get_schema_view(
    public=True,
    permission_classes=[permissions.AllowAny],
 )
-
-router = routers.DefaultRouter()
-# router.register(r'categories', CategoryViewSet)
-# router.register(r'products', ProductViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),

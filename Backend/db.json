@@ -2480,8 +2480,7 @@
     "pk": 1,
     "fields": {
       "subject": "New product",
-      "message": "We're thrilled to announce the launch of our latest product! Introducing [Product Name], designed to revolutionize [industry/field]. Discover its incredible features and how it can benefit you and your business. Visit our website [website URL] for more details and to place your order.",
-      "sent": false
+      "message": "We're thrilled to announce the launch of our latest product! Introducing [Product Name], designed to revolutionize [industry/field]. Discover its incredible features and how it can benefit you and your business. Visit our website [website URL] for more details and to place your order."
     }
   },
   {

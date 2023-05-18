@@ -20,25 +20,35 @@ from rest_framework import permissions, routers
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from catalog.urls import router
+# from catalog.urls import router
+from cart.views import CartViewSet, WishlistViewSet
+from catalog.views import CategoryViewSet, ProductViewSet
+from review.views import ReviewViewSet
 
 schema_view = get_schema_view(
-   openapi.Info(
-      title="Snippets API",
-      default_version='v1',
-      description="Test description",
-      terms_of_service="https://www.google.com/policies/terms/",
-      contact=openapi.Contact(email="contact@snippets.local"),
-      license=openapi.License(name="BSD License"),
-   ),
-   public=True,
-   permission_classes=[permissions.AllowAny],
+    openapi.Info(
+        title="Snippets API",
+        default_version='v1',
+        description="Test description",
+        terms_of_service="https://www.google.com/policies/terms/",
+        contact=openapi.Contact(email="contact@snippets.local"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    permission_classes=[permissions.AllowAny],
 )
 
+router = routers.DefaultRouter()
+router.register(r'category', CategoryViewSet)
+router.register(r'product', ProductViewSet)
+router.register(r'review', ReviewViewSet)
+router.register(r'cart', CartViewSet)
+router.register(r'wishlist', WishlistViewSet)
+
 urlpatterns = [
-    path('', include(router.urls)),
+    path('api/v1/', include(router.urls)),
     path('admin/', admin.site.urls),
-    path('api/v1/review/', include("review.urls")),
+    # path('api/v1/review/', include("review.urls")),
     path('api/v1/authentication/', include("core.urls")),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

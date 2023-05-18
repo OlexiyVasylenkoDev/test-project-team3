@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.db import models
 
 
@@ -21,7 +22,7 @@ class Product(models.Model):
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    # created_by = models.ForeignKey(CustomUser, related_name='seller', on_delete=models.CASCADE)
+    created_by = models.ForeignKey(to=get_user_model(), related_name='seller', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name_plural = 'Products'

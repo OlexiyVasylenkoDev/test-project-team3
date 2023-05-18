@@ -15,6 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.urls import path, include
 from django.urls import path, re_path, include
 from rest_framework import permissions, routers
 from drf_yasg.views import get_schema_view
@@ -43,20 +44,5 @@ router = routers.DefaultRouter()
 urlpatterns = [
     path('', include(router.urls)),
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
-
-    path('categories/', CategoryView.as_view(), name="category"),
-    path('categories/create/', CreateCategoryView.as_view(), name="create category"),
-    path('categories/update/<int:pk>/', UpdateCategoryView.as_view(), name="update category"),
-    path('categories/delete/<int:pk>/', DeleteCategoryView.as_view(), name="delete category"),
-    path('categories/<int:pk>/products/', ProductByCategory.as_view(), name="products by category"),
-
-    path('products/', ProductView.as_view(), name="product"),
-    path('products/create/', CreateProductView.as_view(), name="create product"),
-    path('products/update/<int:pk>/', UpdateProductView.as_view(), name="update product"),
-    path('products/delete/<int:pk>/', DeleteProductView.as_view(), name="delete product"),
-
-    re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path('api/authentication/', include("core.urls"))
 ]

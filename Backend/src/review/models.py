@@ -1,4 +1,7 @@
+from django.contrib.auth import get_user_model
 from django.db import models
+from catalog.models import Product
+
 
 class Review(models.Model):
     RATING_CHOICES = [
@@ -9,8 +12,8 @@ class Review(models.Model):
         (5, '5 - Excellent'),
     ]
 
-    product = models.ForeignKey('catalog.Product', on_delete=models.CASCADE, related_name='reviews')
-    user = models.ForeignKey('core.User', on_delete=models.CASCADE, related_name='reviews')
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, related_name='reviews')
     rating = models.IntegerField(choices=RATING_CHOICES)
     title = models.CharField(max_length=200)
     review_text = models.TextField()

@@ -33,10 +33,13 @@ services:
     restart: on-failure
     env_file:
       - Backend/.env
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
     depends_on:
       - postgres
 
 volumes:
-  local_postgres_data: { }
-  local_postgres_data_backups: { }
-  pgadmin_data: { }
+  local_postgres_data: {}
+  local_postgres_data_backups: {}
+  pgadmin_data: {}

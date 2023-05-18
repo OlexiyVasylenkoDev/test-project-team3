@@ -7,6 +7,7 @@ from django.utils.translation import gettext_lazy as _
 # Create your models here.
 from phonenumber_field.modelfields import PhoneNumberField
 from core.managers import CustomUserManager
+from distribution.models import EmailDistribution
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -70,6 +71,9 @@ class Profile(models.Model):
         upload_to="?", # WHERE DO WE STORE STATIC FILES?
         null=True,
         blank=True,
+    )
+    distributions = models.ManyToManyField(
+        EmailDistribution
     )
 
 

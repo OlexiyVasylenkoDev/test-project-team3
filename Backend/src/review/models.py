@@ -1,6 +1,5 @@
 from django.contrib.auth import get_user_model
 from django.db import models
-
 from catalog.models import Product
 
 
@@ -21,4 +20,4 @@ class Review(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'Review {self.title} for {self.product.title} by {self.user}'
+        return f'"{self.title}" for "{self.product.title}" by {self.user.email}'

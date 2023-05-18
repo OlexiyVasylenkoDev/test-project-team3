@@ -6,4 +6,3 @@ from django.contrib.auth.models import User
 class EmailDistribution(models.Model):
     subject = models.CharField(max_length=200)
     message = models.TextField(max_length=3000)
-    sent = models.BooleanField(default=False)

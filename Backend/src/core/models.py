@@ -66,6 +66,12 @@ class Profile(models.Model):
         null=True,
         blank=False,
     )
+    surname = models.CharField(
+        _("surname"),
+        max_length=256,
+        null=True,
+        blank=False,
+    )
     photo = models.ImageField(
         _("photo"),
         upload_to="?", # WHERE DO WE STORE STATIC FILES?

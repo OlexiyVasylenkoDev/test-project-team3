@@ -1,6 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
+from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAdminUser
 from rest_framework.viewsets import ModelViewSet
 
@@ -36,3 +37,13 @@ class ProductViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
+
+
+class ProductsByCategory(ListAPIView):
+    serializer_class = ProductSerializer
+    allowed_methods = ["GET"]
+
+    def get_queryset(self):
+        category = self.kwargs["id"]
+        return Product.objects.filter(category=category)
+

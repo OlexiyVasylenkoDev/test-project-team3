@@ -22,7 +22,7 @@ from drf_yasg import openapi
 
 # from catalog.urls import router
 from cart.views import CartViewSet, WishlistViewSet
-from catalog.views import CategoryViewSet, ProductViewSet
+from catalog.views import CategoryViewSet, ProductViewSet, ProductsByCategory
 from review.views import ReviewViewSet
 
 schema_view = get_schema_view(
@@ -47,6 +47,7 @@ router.register(r'wishlist', WishlistViewSet)
 
 urlpatterns = [
     path('api/v1/', include(router.urls)),
+    path('api/v1/category/<int:id>/products/', ProductsByCategory.as_view()),
     path('admin/', admin.site.urls),
     # path('api/v1/review/', include("review.urls")),
     path('api/v1/authentication/', include("core.urls")),

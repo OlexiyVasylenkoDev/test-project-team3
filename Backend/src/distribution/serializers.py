@@ -10,4 +10,4 @@ class DistributionCategorySerializer(serializers.ModelSerializer):
 class EmailDistributionSerializer(serializers.ModelSerializer):
     class Meta:
         model = EmailDistribution
-        fields = ['subject', 'message']
+        fields = ['category', 'subject', 'message']

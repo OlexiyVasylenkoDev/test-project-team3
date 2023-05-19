@@ -23,7 +23,6 @@ schema_view = get_schema_view(
    permission_classes=[permissions.AllowAny],
 )
 
-from core.urls import urlpatterns as core_urls
 
 main_router = routers.DefaultRouter()
 main_router.register(r'category', CategoryViewSet)

@@ -14,6 +14,12 @@ class Category(models.Model):
         return self.title
 
 
+class Characteristic(models.Model):
+    category = models.ManyToManyField(Category, related_name='characteristic')
+    key = models.CharField(null=False, blank=False)
+    value = models.CharField(null=True, blank=True)
+
+
 class Product(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)

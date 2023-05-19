@@ -13,12 +13,13 @@ class CategorySerializer(ModelSerializer):
 
     class Meta:
         model = Category
-        fields = ["id", "title", "products"]
+        fields = ["id", "title", "characteristics", "products"]
 
 
 class ProductSerializer(ModelSerializer):
     count = serializers.DecimalField(max_digits=10, decimal_places=2)
+    category_name = serializers.CharField(source='category.characteristics')
 
     class Meta:
         model = Product
-        fields = ["title", "description", "category", "count", "image", "price", "is_active"]
+        fields = ["title", "description", "category", "count", "image", "price", "is_active", "category_name"]

@@ -20,7 +20,6 @@ from rest_framework import permissions, routers
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-# from catalog.urls import router
 from cart.views import CartViewSet, WishlistViewSet
 from catalog.views import CategoryViewSet, ProductViewSet
 from review.views import ReviewViewSet
@@ -46,9 +45,8 @@ router.register(r'cart', CartViewSet)
 router.register(r'wishlist', WishlistViewSet)
 
 urlpatterns = [
-    path('api/v1/', include(router.urls)),
     path('admin/', admin.site.urls),
-    # path('api/v1/review/', include("review.urls")),
+    path('api/v1/', include(router.urls)),
     path('api/v1/authentication/', include("core.urls")),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),

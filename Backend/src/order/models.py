@@ -1,5 +1,6 @@
 from django.db import models
 from catalog.models import Product
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class OrderItem(models.Model):
@@ -8,12 +9,12 @@ class OrderItem(models.Model):
 
 
 class Order(models.Model):
-    id = models.AutoField(primary_key=True, default=1000000)
+    id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
     email = models.EmailField()
-    phone_number = models.CharField(max_length=12)
+    phone = PhoneNumberField(("phone"))
     address = models.TextField()
     ordered_at = models.DateTimeField(auto_now_add=True)
-    closed_at = models.DateTimeField(blank=True)
+    closed_at = models.DateTimeField(null=True)
     order_items = models.ForeignKey(OrderItem, on_delete=models.CASCADE, related_name='order_items')

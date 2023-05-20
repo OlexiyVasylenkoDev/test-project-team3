@@ -1,5 +1,5 @@
 import speech_recognition
-from django.contrib.postgres.search import SearchVector, SearchQuery
+from django.contrib.postgres.search import SearchVector, SearchQuery, TrigramSimilarity
 from django.http import HttpResponse
 from itertools import chain
 
@@ -8,23 +8,28 @@ from core.models import SellerProfile
 
 
 class Search:
-    products = Product.objects.all()
-    categories = Category.objects.all()
-    sellers = SellerProfile.objects.all()
 
     def perform_search(self, query):
-        products = Product.objects.annotate(search=SearchVector("title", "description")).filter(search=SearchQuery(query))
-        categories = Category.objects.annotate(search=SearchVector("title")).filter(search=SearchQuery(query))
-        sellers = SellerProfile.objects.annotate(search=SearchVector("name")).filter(search=SearchQuery(query))
-
-        results_chain = chain(products, categories, sellers)
-        return results_chain
+        products_by_title = Product.objects.annotate(similarity=TrigramSimilarity("title", query), )\
+            .filter(similarity__gt=0.1)\
+            .order_by("-similarity")
+        products_by_description = Product.objects.annotate(similarity=TrigramSimilarity("description", query), )\
+            .filter(similarity__gt=0.1)\
+            .order_by("-similarity")
+        categories = Category.objects.annotate(similarity=TrigramSimilarity("title", query), )\
+            .filter(similarity__gt=0.1)\
+            .order_by("-similarity")
+        sellers = SellerProfile.objects.annotate(similarity=TrigramSimilarity("name", query), )\
+            .filter(similarity__gt=0.2)\
+            .order_by("-similarity")
+        results_chain = chain(products_by_title, products_by_description, categories, sellers)
+        return set(results_chain)
 
     def text_search(self, request):
         query = request.GET.get('query')
         qs = self.perform_search(query)
-        print(qs)
-        return HttpResponse(qs)
+        print([i for i in qs])
+        return HttpResponse([str(i) + "\n" for i in qs])
 
     def voice_search(self, request):
         recognizer = speech_recognition.Recognizer()
@@ -35,10 +40,8 @@ class Search:
                     audio = recognizer.listen(mic)
 
                     text = recognizer.recognize_google(audio)
-                    text = text.lower()
-                    print(text)
                     qs = self.perform_search(text)
-                    print(qs)
+                    print([i for i in qs])
                     if qs:
                         return HttpResponse([str(i) + "\n" for i in qs])
                     else:

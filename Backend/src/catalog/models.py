@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
 from django.db import models
+from statistics import fmean
 
 from core.validators import validate_products_count, validate_product_price
 
@@ -30,5 +31,11 @@ class Product(models.Model):
         verbose_name_plural = 'Products'
         ordering = ('-created_at',)
 
+
     def __str__(self):
         return self.title
+
+
+    def get_product_rating(self):
+        ratings = [review.rating for review in self.reviews.all()]
+        return fmean(ratings)

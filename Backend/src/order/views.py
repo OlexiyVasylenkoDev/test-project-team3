@@ -65,6 +65,7 @@ class OrderViewSet(viewsets.ModelViewSet):
 
     def destroy(self, request, *args, **kwargs):
         review = self.get_object()
-        if review.email == request.user.email or request.user.is_superuser:
-            return super(OrderViewSet, self).update(request, *args, **kwargs)
+        if request.user.is_authenticated:
+            if review.email == request.user.email or request.user.is_superuser:
+                return super(OrderViewSet, self).destroy(request, *args, **kwargs)
         return Response({'message': 'Not found', 'status': '404'}, status=status.HTTP_404_NOT_FOUND, )

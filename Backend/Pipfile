@@ -12,6 +12,9 @@ python-dotenv = "*"
 djangorestframework = "*"
 drf-yasg = "*"
 djangorestframework-simplejwt = "*"
+pyttsx3 = "*"
+speechrecognition = "*"
+pyaudio = "*"
 
 [dev-packages]
 

@@ -4,8 +4,9 @@ from django.shortcuts import render
 from rest_framework.permissions import IsAdminUser
 from rest_framework.viewsets import ModelViewSet
 
-from catalog.models import Category, Product
-from catalog.serializers import CategorySerializer, ProductSerializer
+from catalog.models import Category, Product, CategoryAttribute, ProductAttribute
+from catalog.serializers import CategorySerializer, ProductSerializer, CategoryAttributeSerializer, \
+    ProductAttributeSerializer
 from core.permissions import IsSeller, IsProductSeller
 
 
@@ -19,6 +20,11 @@ class CategoryViewSet(ModelViewSet):
         else:
             permission_classes = []
         return [permission() for permission in permission_classes]
+
+
+class CategoryAttributeViewSet(ModelViewSet):
+    queryset = CategoryAttribute.objects.all()
+    serializer_class = CategoryAttributeSerializer
 
 
 class ProductViewSet(ModelViewSet):
@@ -36,3 +42,8 @@ class ProductViewSet(ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
+
+
+class ProductAttributeViewSet(ModelViewSet):
+    queryset = ProductAttribute.objects.all()
+    serializer_class = ProductAttributeSerializer

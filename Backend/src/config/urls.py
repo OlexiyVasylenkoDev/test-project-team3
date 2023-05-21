@@ -6,6 +6,7 @@ from drf_yasg import openapi
 
 from cart.views import CartViewSet, WishlistViewSet
 from catalog.views import CategoryViewSet, ProductViewSet
+from order.views import OrderViewSet
 from core.views import text_search, voice_search
 from review.views import ReviewViewSet
 from distribution.views import DistributionCategoryViewSet, EmailDistributionViewSet
@@ -24,6 +25,7 @@ schema_view = get_schema_view(
 )
 
 main_router = routers.DefaultRouter()
+main_router.register(r'order', OrderViewSet)
 main_router.register(r'category', CategoryViewSet)
 main_router.register(r'product', ProductViewSet)
 main_router.register(r'review', ReviewViewSet)

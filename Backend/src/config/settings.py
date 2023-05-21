@@ -51,7 +51,7 @@ INSTALLED_APPS = [
     'order',
     'review',
     'phonenumber_field',
-
+    'promotions',
 ]
 
 MIDDLEWARE = [

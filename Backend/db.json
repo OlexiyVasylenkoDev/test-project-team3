@@ -1660,38 +1660,6 @@
     }
   },
   {
-    "model": "contenttypes.contenttype",
-    "pk": 13,
-    "fields": {
-      "app_label": "distribution",
-      "model": "emaildistribution"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 14,
-    "fields": {
-      "app_label": "order",
-      "model": "orderitem"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 15,
-    "fields": {
-      "app_label": "order",
-      "model": "order"
-    }
-  },
-  {
-    "model": "contenttypes.contenttype",
-    "pk": 16,
-    "fields": {
-      "app_label": "review",
-      "model": "review"
-    }
-  },
-  {
     "model": "sessions.session",
     "pk": "96hfas640824i8tbkjqpx4b1m4rywvv2",
     "fields": {
@@ -2473,14 +2441,6 @@
       "is_active": true,
       "groups": [],
       "user_permissions": []
-    }
-  },
-  {
-    "model": "distribution.emaildistribution",
-    "pk": 1,
-    "fields": {
-      "subject": "New product",
-      "message": "We're thrilled to announce the launch of our latest product! Introducing [Product Name], designed to revolutionize [industry/field]. Discover its incredible features and how it can benefit you and your business. Visit our website [website URL] for more details and to place your order."
     }
   },
   {

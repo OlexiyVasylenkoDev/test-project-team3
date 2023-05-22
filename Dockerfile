@@ -6,7 +6,11 @@ WORKDIR /Backend
 
 COPY Backend .
 
+RUN apt-get update
+
 RUN python -m pip install --upgrade pip
+
+RUN apt-get install libasound-dev libportaudio2 libportaudiocpp0 portaudio19-dev -y
 
 RUN pip install -U pipenv && pipenv install --system
 

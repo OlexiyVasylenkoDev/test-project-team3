@@ -15,6 +15,14 @@ class Category(models.Model):
         return self.title
 
 
+class CategoryAttribute(models.Model):
+    category = models.ManyToManyField(Category, related_name='attributes')
+    name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
+
+
 class Product(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
@@ -31,11 +39,15 @@ class Product(models.Model):
         verbose_name_plural = 'Products'
         ordering = ('-created_at',)
 
-
     def __str__(self):
         return self.title
-
 
     def get_product_rating(self):
         ratings = [review.rating for review in self.reviews.all()]
         return fmean(ratings)
+
+
+class ProductAttribute(models.Model):
+    product = models.ForeignKey(Product, related_name='attributes', on_delete=models.CASCADE)
+    attribute = models.ForeignKey(CategoryAttribute, on_delete=models.CASCADE)
+    value = models.CharField(max_length=200)

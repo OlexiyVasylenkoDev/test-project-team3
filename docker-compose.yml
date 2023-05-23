@@ -1,6 +1,6 @@
 services:
   backend:
-    build: ./
+    build: /Backend/.
     container_name: Backend
     working_dir: /Backend
     ports:
@@ -10,6 +10,15 @@ services:
     restart: always
     env_file:
       - Backend/.env
+
+  frontend:
+    build: /frontend/.
+    container_name: frontend
+    working_dir: /frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/frontend
 
   postgres:
     image: postgres:12.0
@@ -40,6 +49,6 @@ services:
       - postgres
 
 volumes:
-  local_postgres_data: {}
-  local_postgres_data_backups: {}
-  pgadmin_data: {}
+  local_postgres_data: { }
+  local_postgres_data_backups: { }
+  pgadmin_data: { }

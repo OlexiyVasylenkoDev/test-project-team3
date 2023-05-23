@@ -4,7 +4,7 @@ RUN mkdir /Backend
 
 WORKDIR /Backend
 
-COPY Backend .
+COPY . .
 
 RUN apt-get update
 
@@ -12,7 +12,7 @@ RUN python -m pip install --upgrade pip
 
 RUN apt-get install libasound-dev libportaudio2 libportaudiocpp0 portaudio19-dev -y
 
-RUN pip install -U pipenv && pipenv install --system
+RUN pip install -U pipenv && pipenv lock && pipenv install --system
 
 CMD ["sh", "-c", "python src/manage.py makemigrations && \
                   python src/manage.py migrate && \

@@ -1,7 +1,22 @@
+from django.forms import forms
 from rest_framework import serializers
 
+from catalog.models import Product
 from core.models import BuyerProfile
 from order.models import Order, OrderItem
+
+
+class OrderItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderItem
+        fields = "__all__"
+
+    def validate(self, data):
+        product = data["goods"]
+        attribute = data["quantity"]
+        if product.count > int(attribute):
+            return data
+        raise serializers.ValidationError("Такої кількості товарів немає в наявності")
 
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -27,6 +42,7 @@ class OrderSerializer(serializers.ModelSerializer):
             fields['email'].required = False
             fields['phone'].required = False
             fields['address'].required = False
+            fields['order_items'].required = False
         return fields
 
     def validate(self, attrs):
@@ -61,9 +77,39 @@ class OrderUpdateSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=False)
     phone = serializers.CharField(required=False)
     address = serializers.CharField(required=False)
+    order_items = OrderItemSerializer(many=True, read_only=True)
     ordered_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
     closed_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", required=False)
 
     class Meta:
         model = Order
         fields = ['id', 'first_name', 'last_name', 'email', 'phone', 'address', 'ordered_at', 'closed_at', 'order_items']
+
+    def get_fields(self):
+        fields = super().get_fields()
+        request = self.context.get('request')
+        if request and request.method == 'POST' and request.user.is_authenticated:
+            fields['first_name'].required = False
+            fields['last_name'].required = False
+            fields['email'].required = False
+            fields['phone'].required = False
+        if request and request.method == 'PUT':
+            # Поле необов'язкове при оновленні
+            fields['first_name'].required = False
+            fields['last_name'].required = False
+            fields['email'].required = False
+            fields['phone'].required = False
+            fields['address'].required = False
+            fields['order_items'].required = False
+        return fields
+
+    def update(self, instance, validated_data):
+        if validated_data["closed_at"]:
+            for i in self.data["order_items"]:
+                order_item = OrderItem.objects.filter(pk=i["id"]).first()
+                product = Product.objects.filter(pk=order_item.goods.pk).first()
+
+                product.quantity -= order_item.quantity
+                product.save()
+
+        return super().update(instance, validated_data)

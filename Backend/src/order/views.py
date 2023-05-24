@@ -1,8 +1,11 @@
 from rest_framework import viewsets, status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from catalog.models import Product
 from order.models import Order, OrderItem
-from order.serializer import OrderSerializer, OrderUpdateSerializer, OrderItemSerializer
+from order.serializer import OrderSerializer, OrderUpdateSerializer, OrderItemSerializer, ProductSerializer
 
 
 class MyPagination(PageNumberPagination):
@@ -75,3 +78,14 @@ class OrderViewSet(viewsets.ModelViewSet):
             if review.email == request.user.email or request.user.is_superuser:
                 return super(OrderViewSet, self).destroy(request, *args, **kwargs)
         return Response({'message': 'Not found', 'status': '404'}, status=status.HTTP_404_NOT_FOUND, )
+
+
+class TopSalesAPIView(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+    def list(self, request, *args, **kwargs):
+        serializer = ProductSerializer()
+        top_sales = serializer.get_top_sales(limit=10)  # Приклад: отримати 10 товарів з топ продажів
+
+        return Response(ProductSerializer(top_sales, many=True).data)

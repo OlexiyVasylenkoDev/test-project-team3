@@ -22,6 +22,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to='image/', blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, validators=[validate_product_price, ])
     is_active = models.BooleanField(default=True)
+    on_promotion = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(to=get_user_model(), related_name='seller', on_delete=models.CASCADE)

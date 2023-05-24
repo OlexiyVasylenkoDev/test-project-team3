@@ -28,15 +28,16 @@ class Promotion(models.Model):
     promo_start = models.DateField()
     promo_end = models.DateField()
 
-    products_on_promotions = models.ManyToManyField(Product, related_name="products_on_promotion",
-                                                    through="ProductsOnPromotions")
+    products_on_promotion = models.ManyToManyField(Product, related_name="products_on_promotion",
+                                                   through="ProductsOnPromotions")
 
     promo_type = models.ForeignKey(PromoType, related_name="promo_type", on_delete=models.PROTECT)
     coupon = models.ForeignKey(Coupon, related_name="coupon", on_delete=models.PROTECT, null=True, blank=True)
 
     def clean(self):
-        if self.promo_start > self.promo_end:
-            raise ValidationError("Start date must be before end date")
+        if self.promo_start and self.promo_end:
+            if self.promo_start > self.promo_end:
+                raise ValidationError("Promo start date must be before the promo end date.")
 
     def __str__(self):
         return self.name
@@ -46,7 +47,7 @@ class ProductsOnPromotions(models.Model):
     product_id = models.ForeignKey(Product, related_name="ProductOnPromotion", on_delete=models.PROTECT)
     promotion_id = models.ForeignKey(Promotion, related_name="promotion", on_delete=models.CASCADE)
     promo_price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal("0.00"),
-                                      validators=[MinValueValidator(Decimal("0.01"))])
+                                      validators=[MinValueValidator(Decimal("0.000"))])
     price_override = models.BooleanField(default=False)
 
     class Meta:

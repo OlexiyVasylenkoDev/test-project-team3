@@ -12,6 +12,10 @@ python-dotenv = "*"
 djangorestframework = "*"
 drf-yasg = "*"
 djangorestframework-simplejwt = "*"
+celery = "*"
+redis = "*"
+django-celery-beat = "*"
+tzdata = "*"
 
 [dev-packages]
 

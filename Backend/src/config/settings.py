@@ -52,6 +52,9 @@ INSTALLED_APPS = [
     'review',
     'phonenumber_field',
     'promotions',
+    'django_celery_beat',
+    'celery',
+    'kombu.transport.redis',
 ]
 
 MIDDLEWARE = [
@@ -146,6 +149,17 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ]
 }
+
+
+CELERY_IMPORTS = ('promotions.tasks',)
+
+CELERY_BROKER_URL = "redis://redis"
+CELERY_RESULT_BACKEND = "redis://redis"
+
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TASK_SERIALIZER = "json"
+
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),

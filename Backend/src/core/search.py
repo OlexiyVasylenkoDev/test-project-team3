@@ -1,37 +1,36 @@
 import speech_recognition
-from django.contrib.postgres.search import SearchVector, SearchQuery, TrigramSimilarity
-from django.http import HttpResponse
-from itertools import chain
+from django.contrib.postgres.search import TrigramSimilarity
 
 from catalog.models import Product, Category
+from catalog.serializers import CategorySerializer, ProductSerializer
 from core.models import SellerProfile
+from core.serializers import SellerSerializer
 
 
 class Search:
 
     def perform_search(self, query):
-        products_by_title = Product.objects.annotate(similarity=TrigramSimilarity("title", query), )\
-            .filter(similarity__gt=0.1)\
+        products = Product.objects.annotate(similarity=TrigramSimilarity("title", query) +
+                                                       TrigramSimilarity("description", query)) \
+            .filter(similarity__gt=0.1) \
             .order_by("-similarity")
-        products_by_description = Product.objects.annotate(similarity=TrigramSimilarity("description", query), )\
-            .filter(similarity__gt=0.1)\
+        categories = Category.objects.annotate(similarity=TrigramSimilarity("title", query), ) \
+            .filter(similarity__gt=0.1) \
             .order_by("-similarity")
-        categories = Category.objects.annotate(similarity=TrigramSimilarity("title", query), )\
-            .filter(similarity__gt=0.1)\
+        sellers = SellerProfile.objects.annotate(similarity=TrigramSimilarity("name", query), ) \
+            .filter(similarity__gt=0.2) \
             .order_by("-similarity")
-        sellers = SellerProfile.objects.annotate(similarity=TrigramSimilarity("name", query), )\
-            .filter(similarity__gt=0.2)\
-            .order_by("-similarity")
-        results_chain = chain(products_by_title, products_by_description, categories, sellers)
-        return set(results_chain)
+        category_serializer = CategorySerializer(categories, many=True)
+        product_serializer = ProductSerializer(products, many=True)
+        seller_serializer = SellerSerializer(sellers, many=True)
+        result = category_serializer.data + product_serializer.data + seller_serializer.data
+        return result
 
     def text_search(self, request):
         query = request.GET.get('query')
-        qs = self.perform_search(query)
-        print([i for i in qs])
-        return HttpResponse([str(i) + "\n" for i in qs])
+        return self.perform_search(query)
 
-    def voice_search(self, request):
+    def voice_search(self):
         recognizer = speech_recognition.Recognizer()
         while True:
             try:
@@ -41,9 +40,8 @@ class Search:
 
                     text = recognizer.recognize_google(audio)
                     qs = self.perform_search(text)
-                    print([i for i in qs])
                     if qs:
-                        return HttpResponse([str(i) + "\n" for i in qs])
+                        return qs
                     else:
                         continue
             except speech_recognition.UnknownValueError:

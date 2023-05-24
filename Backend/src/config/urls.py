@@ -34,10 +34,10 @@ main_router.register(r'distribution_categories', DistributionCategoryViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('search/text/', text_search),
-    path('search/voice/', voice_search),
     path('api/v1/', include(main_router.urls)),
     path('api/v1/authentication/', include("core.urls")),
+    path('api/v1/search/text/', text_search),
+    path('api/v1/search/voice/', voice_search),
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),

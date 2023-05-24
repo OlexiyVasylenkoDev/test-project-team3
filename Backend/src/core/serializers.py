@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User
+from .models import User, SellerProfile
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
@@ -22,3 +22,9 @@ class RegistrationSerializer(serializers.ModelSerializer):
             user.is_active = True
             user.save()
             return user
+
+
+class SellerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SellerProfile
+        fields = "__all__"

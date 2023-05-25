@@ -4,18 +4,6 @@ from rest_framework.serializers import ModelSerializer
 from catalog.models import Category, Product, CategoryAttribute, ProductAttribute
 
 
-class CategorySerializer(ModelSerializer):
-    class Meta:
-        model = Category
-        fields = "__all__"
-
-
-class CategoryAttributeSerializer(ModelSerializer):
-    class Meta:
-        model = CategoryAttribute
-        fields = "__all__"
-
-
 class ProductSerializer(ModelSerializer):
     count = serializers.DecimalField(max_digits=10, decimal_places=2)
 
@@ -36,3 +24,16 @@ class ProductAttributeSerializer(ModelSerializer):
             return data
         raise serializers.ValidationError("The product doesn`t have such an attribute!")
 
+
+class CategorySerializer(ModelSerializer):
+    product = ProductSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Category
+        fields = ["title", "product"]
+
+
+class CategoryAttributeSerializer(ModelSerializer):
+    class Meta:
+        model = CategoryAttribute
+        fields = "__all__"

@@ -27,7 +27,7 @@ class Product(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     category = models.ForeignKey(Category, related_name='product', on_delete=models.CASCADE)
-    quantity = models.IntegerField(default=1, validators=[validate_products_count, ])
+    count = models.IntegerField(default=1, validators=[validate_products_count, ])
     image = models.ImageField(upload_to='image/', blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, validators=[validate_product_price, ])
     is_active = models.BooleanField(default=True)
@@ -51,3 +51,6 @@ class ProductAttribute(models.Model):
     product = models.ForeignKey(Product, related_name='attributes', on_delete=models.CASCADE)
     attribute = models.ForeignKey(CategoryAttribute, on_delete=models.CASCADE)
     value = models.CharField(max_length=200)
+
+    def __str__(self):
+        return f"{self.product}. {self.attribute}: {self.value}"

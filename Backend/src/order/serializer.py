@@ -22,10 +22,10 @@ class OrderItemSerializer(serializers.ModelSerializer):
 class OrderSerializer(serializers.ModelSerializer):
     ordered_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
     closed_at = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-
+    orderitem_set = OrderItemSerializer(read_only=True, many=True)
     class Meta:
         model = Order
-        fields = ['id', 'first_name', 'last_name', 'email', 'phone', 'address', 'ordered_at', 'closed_at', 'order_items']
+        fields = ['id', 'first_name', 'last_name', 'email', 'phone', 'address', 'ordered_at', 'closed_at', 'orderitem_set']
 
     def get_fields(self):
         fields = super().get_fields()
@@ -42,7 +42,7 @@ class OrderSerializer(serializers.ModelSerializer):
             fields['email'].required = False
             fields['phone'].required = False
             fields['address'].required = False
-            fields['order_items'].required = False
+            fields['orderitem_set'].required = False
         return fields
 
     def validate(self, attrs):

@@ -1,19 +1,31 @@
-# ==== CONFIGURE =====
-# Use a Node 16 base image
-FROM node:16-alpine
-# Set the working directory to /app inside the container
-WORKDIR /frontend
-# Copy app files
+# Stage 1: Build React app
+FROM node:14-alpine as build-stage
+
+WORKDIR /app
+
+# Copy package.json and package-lock.json
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci --silent
+
+# Copy the source code
 COPY . .
-# ==== BUILD =====
-# Install dependencies (npm ci makes sure the exact versions in the lockfile gets installed)
-RUN npm ci
-# Build the app
+
+# Build the React app
 RUN npm run build
-# ==== RUN =======
-# Set the env to "production"
-ENV NODE_ENV production
-# Expose the port on which the app will be running (3000 is the default that `serve` uses)
-EXPOSE 3000
-# Start the app
-CMD [ "npx", "serve", "build" ]
+
+# Stage 2: Serve React app with Nginx
+FROM nginx:1.21-alpine as production-stage
+
+# Copy the build files from the previous stage
+COPY --from=build-stage /app/build /usr/share/nginx/html
+
+# Copy custom Nginx configuration file
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Expose port 80
+EXPOSE 80
+
+# Start Nginx server
+CMD ["nginx", "-g", "daemon off;"]

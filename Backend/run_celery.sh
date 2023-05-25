@@ -1,3 +1,4 @@
 #!/bin/bash
 
-celery -A celery worker -l info -c 4
+cd src
+celery -A config worker -l info

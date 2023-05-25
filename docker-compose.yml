@@ -41,29 +41,6 @@ services:
     depends_on:
       - postgres
 
-#  redis:
-#    container_name: redis
-#    restart: always
-#    image: redis:alpine
-#    ports:
-#      - "6379:6379"
-#
-#  celery:
-#    container_name: celery
-#    restart: always
-#    working_dir: /Backend
-#    build:
-#      context: ./
-#    command: celery -A celery worker -l info -c 4
-#    environment:
-#      - DEBUG=1
-#      - CELERY_BROKER=redis://redis:6379/0
-#      - CELERY_BACKEND=redis://redis:6379:0
-#    depends_on:
-#      - redis
-#    volumes:
-#      - ./Backend/src:/Backend/src
-
   celery:
     build: ./
     container_name: celery
@@ -78,8 +55,9 @@ services:
     depends_on:
       - redis
     environment:
-      - CELERY_BROKER_URL=redis://redis
-      - CELERY_RESULT_BACKEND=redis://redis
+          - DEBUG=1
+          - CELERY_BROKER=redis://redis:6379/0
+          - CELERY_BACKEND=redis://redis:6379
 
   redis:
     image: redis
@@ -89,8 +67,8 @@ services:
       - Backend/.env
     depends_on:
       - backend
-#    ports:
-#      - "6379:6379"
+    ports:
+      - 6379:6379
 
   redis-admin:
     image: rediscommander/redis-commander:latest

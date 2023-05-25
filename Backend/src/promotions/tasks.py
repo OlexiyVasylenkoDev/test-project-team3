@@ -16,7 +16,7 @@ def promotion_prices(reduction_amount, obj_id):
 
         for promo in promotions:
             if not promo.price_override:
-                store_price = promo.product_inventory_id.store_price
+                store_price = promo.product_id.store_price
                 new_price = ceil(store_price - (store_price * Decimal(reduction)))
                 promo.promo_price = Decimal(new_price)
                 promo.save()

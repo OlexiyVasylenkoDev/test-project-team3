@@ -12,6 +12,7 @@ python-dotenv = "*"
 djangorestframework = "*"
 drf-yasg = "*"
 djangorestframework-simplejwt = "*"
+stripe = "*"
 
 [dev-packages]
 

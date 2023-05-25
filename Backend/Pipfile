@@ -13,6 +13,10 @@ djangorestframework = "*"
 drf-yasg = "*"
 djangorestframework-simplejwt = "*"
 stripe = "*"
+pyttsx3 = "*"
+speechrecognition = "*"
+pyaudio = "*"
+
 
 [dev-packages]
 

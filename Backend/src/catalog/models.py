@@ -27,7 +27,7 @@ class Product(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField(blank=True)
     category = models.ForeignKey(Category, related_name='product', on_delete=models.CASCADE)
-    count = models.IntegerField(default=1, validators=[validate_products_count, ])
+    quantity = models.IntegerField(default=1, validators=[validate_products_count, ])
     image = models.ImageField(upload_to='image/', blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2, validators=[validate_product_price, ])
     is_active = models.BooleanField(default=True)

@@ -26,6 +26,7 @@ schema_view = get_schema_view(
 
 main_router = routers.DefaultRouter()
 main_router.register(r'order', OrderViewSet)
+main_router.register(r'order_item', OrderItemViewSet)
 main_router.register(r'category', CategoryViewSet)
 main_router.register(r'category_attribute', CategoryAttributeViewSet)
 main_router.register(r'product', ProductViewSet)

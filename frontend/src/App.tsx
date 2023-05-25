@@ -1,7 +1,12 @@
-import React from "react";
+
+import Card  from "./componans/card/Card";
+
 
 function App() {
-  return <div className="App">Here will be Rozetka 2.0 Docker</div>;
+  return (
+  <div className="App">
+  <Card/>
+  
+    </div>);
 }
-
 export default App;

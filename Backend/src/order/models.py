@@ -17,4 +17,7 @@ class Order(models.Model):
     address = models.TextField()
     ordered_at = models.DateTimeField(auto_now_add=True)
     closed_at = models.DateTimeField(null=True)
-    order_items = models.ForeignKey(OrderItem, on_delete=models.CASCADE, related_name='order_items')
+    order_items = models.ManyToManyField(OrderItem, related_name='order_items')
+
+
+

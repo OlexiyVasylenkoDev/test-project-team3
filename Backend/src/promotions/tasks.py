@@ -17,7 +17,8 @@ def promotion_prices(reduction_amount, obj_id):
 
         for promo_product in promotions:
             if not promo_product.price_override:
-                price = promo_product.product_id.price
+                price = promo_product.product_id.base_price
+                print(price)
                 new_price = ceil(price - (price * Decimal(reduction)))
                 promo_product.promo_price = Decimal(new_price)
                 promo_product.save()
@@ -41,3 +42,12 @@ def promotion_management():
                     else:
                         promo.is_active = False
             promo.save()
+
+
+# @shared_task()
+# def promotion_prices_to_zero(obj_id):
+#     with transaction.atomic():
+#         promotions = Promotion.products_on_promotion.through.objects.filter(promotion_id=obj_id)
+#         for promo_product in promotions:
+#             pr
+#             promo_product.save()

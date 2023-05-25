@@ -19,14 +19,9 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ['id', 'title', 'description', 'category', 'count', 'image', 'price', 'promo_price', 'is_active']
+        fields = ['id', 'title', 'description', 'category', 'count', 'image', 'base_price', 'promo_price', 'is_active']
 
 
     def get_promo_price(self, obj):
-        try:
-            promo_product = Promotion.products_on_promotion.through.objects.get(
-                Q(promotion_id__is_active=True) & Q(product_id=obj.id)
-            )
-            return str(promo_product.promo_price)
-        except ObjectDoesNotExist:
-            return None
+        return obj.price
+

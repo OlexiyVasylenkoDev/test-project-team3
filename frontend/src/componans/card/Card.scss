@@ -1,0 +1,140 @@
+@mixin button-hover {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.card {
+  // margin: 100px;
+  position: relative;
+  width: 240px;
+  height: 404px;
+  background: #fff;
+  border: 1px solid rgb(228, 213, 213);
+  font-family: "Inter";
+  font-style: normal;
+
+  &__photo {
+    width: 152px;
+    height: 200px;
+    position: absolute;
+    top: 46px;
+    left: 44px;
+  }
+
+  &__top {
+    display: flex;
+    justify-content: center;
+    width: 78px;
+    height: 18px;
+    margin: 16px;
+    background: #c8d2ff;
+    border-radius: 8px;
+
+    &__title {
+      height: 18px;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 12px;
+      color: #000000;
+    }
+  }
+
+  &__labels__like {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    @include button-hover;
+  }
+
+  &__labels__scales {
+    position: absolute;
+    top: 58px;
+    right: 18px;
+    @include button-hover;
+  }
+  &__info {
+    margin-top: 235px;
+
+    &__name {
+      margin: 16px;
+      font-weight: 400;
+      font-size: 12px;
+      color: #000000;
+    }
+
+    &__rating {
+      margin: -7px -25px;
+      list-style-type: none;
+      @include button-hover;
+      &__stars {
+        display: inline-block;
+        
+      }
+
+      &__label {
+        position: absolute;
+        left: 124px;
+      }
+    }
+
+    &__message {
+      position: absolute;
+      left: 110px;
+      bottom: 90px;
+      @include button-hover;
+
+      &__number {
+        position: absolute;
+        width: 16px;
+        height: 18px;
+        font-weight: 400;
+        font-size: 12px;
+        color: #000000;
+      }
+    }
+
+    &__price__active {
+      position: absolute;
+      left: 16px;
+      bottom: 4px;
+      width: 92px;
+      height: 29px;
+      font-weight: 600;
+      font-size: 24px;
+
+      color: #000000;
+    }
+    &__price__prev {
+      position: absolute;
+      left: 16px;
+      bottom: 53px;
+      width: 44px;
+      height: 18px;
+      text-decoration: line-through;
+      font-weight: 400;
+      font-size: 12px;
+
+      color: #605d5d;
+    }
+
+    &__basket {
+      padding: 10px;
+      text-align: center;
+      width: 44px;
+      height: 44px;
+      background: #c8d2ff;
+      border: 0;
+      border-radius: 8px;
+      position: absolute;
+      bottom: 24px;
+      right: 16px;
+      @include button-hover;
+    }
+  }
+}
+
+.star, .card__info__message__label{
+  width: 15px;
+  height: 15px;
+}

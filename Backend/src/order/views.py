@@ -2,12 +2,18 @@ from rest_framework import viewsets, status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from order.models import Order, OrderItem
-from order.serializer import OrderSerializer, OrderUpdateSerializer
+from order.serializer import OrderSerializer, OrderUpdateSerializer, OrderItemSerializer
 
 
 class MyPagination(PageNumberPagination):
     page_size = 3  # Кількість об'єктів на сторінці
     page_query_param = 'page'
+
+
+class OrderItemViewSet(viewsets.ModelViewSet):
+    queryset = OrderItem.objects.all()
+    serializer_class = OrderItemSerializer
+    pagination_class = MyPagination
 
 
 class OrderViewSet(viewsets.ModelViewSet):

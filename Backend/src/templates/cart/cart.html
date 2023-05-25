@@ -1,0 +1,36 @@
+<h1>Shopping Cart</h1>
+
+{% if cart %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Image</th>
+        <th>Title</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Total</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cart_item in cart.items.all %}
+        <tr>
+          <td><img src="{{ cart_item.product.image.url }}" alt="{{ cart_item.product.title }}" width="50"></td>
+          <td>{{ cart_item.product.title }}</td>
+          <td>${{ cart_item.product.price }}</td>
+          <td>{{ cart_item.quantity }}</td>
+          <td>${{ cart_item.product.price|mul:cart_item.quantity }}</td>
+          <td>
+            <a href="{% url 'cart:remove_from_cart' cart_item.id %}">Remove</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div>
+    <a href="{% url 'cart:clear_cart' %}" class="btn btn-danger">Clear Cart</a>
+  </div>
+{% else %}
+  <p>Your cart is empty.</p>
+{% endif %}

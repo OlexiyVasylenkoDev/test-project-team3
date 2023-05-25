@@ -10,7 +10,7 @@ from drf_yasg import openapi
 from cart.views import CartViewSet, WishlistViewSet
 from catalog.views import CategoryViewSet, ProductViewSet, CheckoutSessionView, SuccessfulPayment, stripe_session_completed_webhook, CategoryAttributeViewSet, ProductAttributeViewSet
 from cart.views import CartView, AddToCartView, ClearCartView, RemoveFromCartView
-from order.views import OrderViewSet
+from order.views import OrderViewSet, OrderItemViewSet
 from core.views import text_search, voice_search
 from review.views import ReviewViewSet
 from distribution.views import DistributionCategoryViewSet, EmailDistributionViewSet

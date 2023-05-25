@@ -16,7 +16,7 @@ stripe = "*"
 pyttsx3 = "*"
 speechrecognition = "*"
 pyaudio = "*"
-
+django-cors-headers = "*"
 
 [dev-packages]
 

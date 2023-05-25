@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from datetime import timedelta
+from celery.schedules import crontab
 
 from dotenv import load_dotenv
 from pathlib import Path
@@ -156,6 +157,13 @@ CELERY_BROKER_URL = "redis://redis:6379/0"
 CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TASK_SERIALIZER = "json"
+
+CELERY_BEAT_SCHEDULE = {
+    "sample_task": {
+        "task": "ecommerce.promotion.promotion_management",
+        "schedule": crontab(minute="0", hour="1"),
+    },
+}
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),

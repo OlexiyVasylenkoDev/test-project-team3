@@ -19,9 +19,7 @@ class ProductList(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         super().save_model(request, obj, form, change)
         products_on_promotions = obj.products_on_promotion.through.objects.filter(promotion_id=obj.id)
-        print(products_on_promotions)
         for product in products_on_promotions:
-            product.product_id.on_promotion = True
             product.product_id.save()
         promotion_prices.delay(obj.promo_reduction, obj.id)
         promotion_management.delay()

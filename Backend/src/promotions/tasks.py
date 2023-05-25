@@ -4,6 +4,7 @@ from math import ceil
 
 from celery import shared_task
 from django.db import transaction
+from django.db.models import Q
 
 from .models import Promotion
 
@@ -14,12 +15,12 @@ def promotion_prices(reduction_amount, obj_id):
         promotions = Promotion.products_on_promotion.through.objects.filter(promotion_id=obj_id)
         reduction = reduction_amount / 100
 
-        for promo in promotions:
-            if not promo.price_override:
-                store_price = promo.product_id.store_price
-                new_price = ceil(store_price - (store_price * Decimal(reduction)))
-                promo.promo_price = Decimal(new_price)
-                promo.save()
+        for promo_product in promotions:
+            if not promo_product.price_override:
+                price = promo_product.product_id.price
+                new_price = ceil(price - (price * Decimal(reduction)))
+                promo_product.promo_price = Decimal(new_price)
+                promo_product.save()
 
 
 @shared_task()

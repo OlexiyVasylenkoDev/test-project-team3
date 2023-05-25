@@ -18,6 +18,9 @@ class Coupon(models.Model):
     name = models.CharField(max_length=255)
     coupon_code = models.CharField(max_length=20)
 
+    def __str__(self):
+        return self.name
+
 
 class Promotion(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -44,7 +47,7 @@ class Promotion(models.Model):
 
 
 class ProductsOnPromotions(models.Model):
-    product_id = models.ForeignKey(Product, related_name="ProductOnPromotion", on_delete=models.PROTECT)
+    product_id = models.ForeignKey(Product, related_name="product_on_promotion", on_delete=models.PROTECT)
     promotion_id = models.ForeignKey(Promotion, related_name="promotion", on_delete=models.CASCADE)
     promo_price = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal("0.00"),
                                       validators=[MinValueValidator(Decimal("0.000"))])
@@ -52,3 +55,6 @@ class ProductsOnPromotions(models.Model):
 
     class Meta:
         unique_together = ("product_id", "promotion_id")
+
+    def __str__(self):
+        return self.product_id.title

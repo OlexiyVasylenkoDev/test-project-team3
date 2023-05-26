@@ -7,7 +7,7 @@ function App() {
   return (
   <div className="App">
   <Header></Header>
-  {/* <Categories></Categories> */}
+  <Categories></Categories>
   <Catalog_slider></Catalog_slider>
   <CardList></CardList>
     </div>);

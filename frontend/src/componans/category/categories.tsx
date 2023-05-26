@@ -2,17 +2,20 @@ import React, { useState, useEffect } from 'react';
 import "./categories.css"
 import "../catalog-slider/catalog_categories.css"
 const Categories = () => {
-    const [posts, setPosts] = useState([]);
-    const url = "https://0c38-188-130-178-216.ngrok-free.app/api/v1/category/";
-   fetch(url, {
-      method: "get",
-      headers: new Headers({
-        "ngrok-skip-browser-warning": "69420",
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((err) => console.log(err));
+    const url = 'https://ffef-188-130-178-216.ngrok-free.app/api/v1/category/';
+
+fetch(url, {
+  method: "get",
+  headers: new Headers({
+    "ngrok-skip-browser-warning": "69420",
+  }),
+})
+.then((response) => response.json())
+.then((repos) => {
+    console.log(repos);
+  
+})
+.catch((err) => console.log(err));
     return (
         <div className='backdark'>
             <div className='container'>

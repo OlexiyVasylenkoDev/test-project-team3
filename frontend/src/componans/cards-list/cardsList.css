@@ -1,0 +1,31 @@
+.between{
+   background-color: #F6F6FF;
+   padding-top: 64px;
+   padding-bottom: 24px;
+}
+
+.title-of-list{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 120%;
+    color: #323030;
+}
+
+.cards-list{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 16px;
+    margin-bottom: 16px;
+}
+
+.cards-item{
+    margin-right: 24px;
+}
+
+.cards-item:nth-child(5n){
+    margin-right: 0;
+}

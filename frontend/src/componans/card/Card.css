@@ -1,0 +1,125 @@
+.rating-list{
+  display: flex;
+  flex-direction: row;
+}
+
+.card-info{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  color: #000000;
+  margin-top: 14px;
+  margin-bottom: 8px;
+}
+
+.card{
+  position: relative;
+  padding: 16px;
+  padding-top: 48px;
+  padding-bottom: 24px;
+  -webkit-box-shadow: 0px 0px 18px -5px rgba(66, 68, 90, 1);
+  -moz-box-shadow: 0px 0px 18px -5px rgba(66, 68, 90, 1);
+  box-shadow: 0px 0px 18px -5px rgba(66, 68, 90, 1);
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.card-photo{
+  height: 200px;
+  width: 152px;
+  margin-left: 26px;
+  margin-right: 26px;
+}
+
+.comments{
+  margin-left: 12px;
+}
+
+.comments-link{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.value-of-comments{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  color: #000000;
+}
+
+.rat-com{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.prices{
+  margin-top: 27px;
+}
+
+.old-price{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  color: #6f6c6c;
+  text-decoration: line-through;
+}
+
+.new-price{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 120%;
+  color: #000000;
+}
+
+.top-seller{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  color: #000000;
+  background-color: #C8D2FF;
+  border-radius: 8px;
+  padding-left: 4px;
+  padding-right: 4px;
+  top: 16px;
+  left: 16px;
+}
+
+.icon-upper-list{
+  position: absolute;
+  right: 18px;
+  top: 18px;
+}
+
+.icon-upper-item:nth-child(1){
+  margin-bottom: 10px;
+}
+
+.btn-buy{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  background-color: #C8D2FF;
+  border-radius: 8px;
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+}

@@ -5,7 +5,7 @@ from rest_framework.viewsets import ModelViewSet
 from cart.models import Cart, WishList, CartItem
 from catalog.models import Product
 
-from cart.serializers import CartSerializer, WishlistSerializer
+from cart.serializers import CartSerializer, WishlistSerializer, CartItemSerializer
 from core.permissions import IsProductBuyer, IsBuyer
 
 # Django
@@ -17,6 +17,25 @@ from django.views.generic import TemplateView, RedirectView
 class CartViewSet(ModelViewSet):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
+
+
+
+class CartItemViewSet(ModelViewSet):
+    queryset = CartItem.objects.all()
+    serializer_class = CartItemSerializer
+
+    def get_permissions(self):
+        if self.action in ('create', 'destroy'):
+            permission_classes = [IsProductBuyer]
+        elif self.action in ("update", "partial_update"):
+            permission_classes = [IsProductBuyer]
+        else:
+            permission_classes = []
+        return [permission() for permission in permission_classes]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
 
 class WishlistViewSet(ModelViewSet):
     queryset = WishList.objects.all()

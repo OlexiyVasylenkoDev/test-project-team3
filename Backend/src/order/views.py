@@ -4,8 +4,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from catalog.models import Product
+from catalog.serializers import ProductSerializer
 from order.models import Order, OrderItem
-from order.serializer import OrderSerializer, OrderUpdateSerializer, OrderItemSerializer, ProductSerializer
+from order.serializer import OrderSerializer, OrderUpdateSerializer, OrderItemSerializer
 
 
 class MyPagination(PageNumberPagination):

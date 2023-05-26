@@ -104,11 +104,11 @@ class OrderUpdateSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         if validated_data["closed_at"]:
-            for i in self.data["order_items"]:
-                order_item = OrderItem.objects.filter(pk=i["id"]).first()
-                product = Product.objects.filter(pk=order_item.goods.pk).first()
+            for i in OrderItem.objects.filter(order=instance):
+                order_item = OrderItem.objects.filter(pk=i.id).first()
+                product = Product.objects.filter(pk=order_item.product.pk).first()
 
-                product.quantity -= order_item.quantity
+                product.count -= order_item.quantity
                 product.save()
 
         return super().update(instance, validated_data)

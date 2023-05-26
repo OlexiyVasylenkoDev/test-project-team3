@@ -1,6 +1,6 @@
 services:
   backend:
-    build: ./
+    build: /Backend/.
     container_name: Backend
     working_dir: /Backend
     ports:
@@ -12,6 +12,15 @@ services:
       - Backend/.env
     depends_on:
       - postgres
+
+  frontend:
+    build: /frontend/.
+    container_name: frontend
+    working_dir: /frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/frontend
 
   postgres:
     image: postgres:12.0
@@ -107,6 +116,6 @@ services:
 
 
 volumes:
-  local_postgres_data: {}
-  local_postgres_data_backups: {}
-  pgadmin_data: {}
+  local_postgres_data: { }
+  local_postgres_data_backups: { }
+  pgadmin_data: { }

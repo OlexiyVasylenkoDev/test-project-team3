@@ -16,6 +16,10 @@ celery = "*"
 redis = "*"
 django-celery-beat = "*"
 tzdata = "*"
+stripe = "*"
+pyttsx3 = "*"
+speechrecognition = "*"
+pyaudio = "*"
 
 [dev-packages]
 

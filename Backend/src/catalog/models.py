@@ -2,6 +2,8 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 from django.db.models import Q
+from statistics import fmean
+
 
 from core.validators import validate_products_count, validate_product_price
 
@@ -14,6 +16,14 @@ class Category(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class CategoryAttribute(models.Model):
+    category = models.ManyToManyField(Category, related_name='attributes')
+    name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
 
 
 class Product(models.Model):
@@ -42,3 +52,17 @@ class Product(models.Model):
             return product_on_promotions.promo_price
         except ObjectDoesNotExist:
             return None
+          
+    def get_product_rating(self):
+        ratings = [review.rating for review in self.reviews.all()]
+        return fmean(ratings)
+
+
+class ProductAttribute(models.Model):
+    product = models.ForeignKey(Product, related_name='attributes', on_delete=models.CASCADE)
+    attribute = models.ForeignKey(CategoryAttribute, on_delete=models.CASCADE)
+    value = models.CharField(max_length=200)
+
+    def __str__(self):
+        return f"{self.product}. {self.attribute}: {self.value}"
+      

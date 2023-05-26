@@ -32,9 +32,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-CSRF_TRUSTED_ORIGINS = [
-    os.getenv('NGROK_SERVER')
-]
+# CSRF_TRUSTED_ORIGINS = [
+#     "http://localhost"
+# ]
 
 # Application definition
 
@@ -61,9 +61,11 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'celery',
     'kombu.transport.redis',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -182,3 +184,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'image')
 STRIPE_TEST_PUBLIC_KEY = os.getenv('STRIPE_TEST_PUBLIC_KEY')
 STRIPE_TEST_SECRET_KEY = os.getenv('STRIPE_TEST_SECRET_KEY')
 STRIPE_WEBHOOK_SECRET = os.getenv('STRIPE_WEBHOOK_SECRET')
+
+CORS_ORIGIN_ALLOW_ALL = True

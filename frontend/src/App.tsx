@@ -8,7 +8,5 @@ function App() {
   <Card/>
   
     </div>);
-  
 }
-
 export default App;

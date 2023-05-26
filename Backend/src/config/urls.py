@@ -10,7 +10,8 @@ from drf_yasg import openapi
 
 from order.views import OrderViewSet, OrderItemViewSet, TopSalesAPIView
 from catalog.views import CategoryViewSet, ProductViewSet, CheckoutSessionView, SuccessfulPayment, stripe_session_completed_webhook, CategoryAttributeViewSet, ProductAttributeViewSet
-from cart.views import CartView, AddToCartView, ClearCartView, RemoveFromCartView, CartViewSet, WishlistViewSet
+from cart.views import CartView, AddToCartView, ClearCartView, RemoveFromCartView, CartViewSet, WishlistViewSet, \
+    CartItemViewSet
 from core.views import text_search, voice_search
 from review.views import ReviewViewSet
 from distribution.views import DistributionCategoryViewSet, EmailDistributionViewSet
@@ -38,6 +39,7 @@ main_router.register(r'product', ProductViewSet)
 main_router.register(r'product_attribute', ProductAttributeViewSet)
 main_router.register(r'review', ReviewViewSet)
 main_router.register(r'cart', CartViewSet)
+main_router.register(r'cart_item', CartItemViewSet)
 main_router.register(r'wishlist', WishlistViewSet)
 main_router.register(r'distribution', EmailDistributionViewSet)
 main_router.register(r'distribution_categories', DistributionCategoryViewSet)

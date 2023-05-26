@@ -1,3 +1,4 @@
+from django.db.models import Sum, Case, When
 from django.forms import forms
 from rest_framework import serializers
 
@@ -113,3 +114,23 @@ class OrderUpdateSerializer(serializers.ModelSerializer):
                 product.save()
 
         return super().update(instance, validated_data)
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = "__all__"
+
+    def get_top_sales(self, limit):
+        # Отримуємо сумарну кількість продуктів замовлених по кожному товару
+        top_sales = OrderItem.objects.values('goods').annotate(total_quantity=Sum('quantity')).order_by(
+            '-total_quantity')[:limit]
+
+        # Отримуємо ідентифікатори товарів з топ продажів
+        top_product_ids = [sale['goods'] for sale in top_sales]
+
+        # Отримуємо товари з бази даних, використовуючи ідентифікатори
+        top_products = Product.objects.filter(id__in=top_product_ids).order_by(
+            Case(*[When(id=id, then=pos) for pos, id in enumerate(top_product_ids)]))
+
+        return top_products

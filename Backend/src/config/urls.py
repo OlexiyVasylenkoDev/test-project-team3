@@ -7,10 +7,10 @@ from rest_framework import permissions, routers
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from cart.views import CartViewSet, WishlistViewSet
+
+from order.views import OrderViewSet, OrderItemViewSet, TopSalesAPIView
 from catalog.views import CategoryViewSet, ProductViewSet, CheckoutSessionView, SuccessfulPayment, stripe_session_completed_webhook, CategoryAttributeViewSet, ProductAttributeViewSet
-from cart.views import CartView, AddToCartView, ClearCartView, RemoveFromCartView
-from order.views import OrderViewSet, OrderItemViewSet
+from cart.views import CartView, AddToCartView, ClearCartView, RemoveFromCartView, CartViewSet, WishlistViewSet
 from core.views import text_search, voice_search
 from review.views import ReviewViewSet
 from distribution.views import DistributionCategoryViewSet, EmailDistributionViewSet
@@ -31,6 +31,7 @@ schema_view = get_schema_view(
 main_router = routers.DefaultRouter()
 main_router.register(r'order', OrderViewSet)
 main_router.register(r'order_item', OrderItemViewSet)
+main_router.register(r'top_sales', TopSalesAPIView)
 main_router.register(r'category', CategoryViewSet)
 main_router.register(r'category_attribute', CategoryAttributeViewSet)
 main_router.register(r'product', ProductViewSet)

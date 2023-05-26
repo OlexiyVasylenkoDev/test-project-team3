@@ -1,7 +1,12 @@
+from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
+from decimal import Decimal
 
+from promotions.models import Promotion, ProductsOnPromotions
 from catalog.models import Category, Product, CategoryAttribute, ProductAttribute
+
 
 
 class ProductSerializer(ModelSerializer):
@@ -23,6 +28,18 @@ class ProductAttributeSerializer(ModelSerializer):
         if product.category in attribute.category.all():
             return data
         raise serializers.ValidationError("The product doesn`t have such an attribute!")
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    promo_price = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Product
+        fields = ['id', 'title', 'description', 'category', 'count', 'image', 'base_price', 'promo_price', 'is_active']
+
+
+    def get_promo_price(self, obj):
+        return obj.price
 
 
 class CategorySerializer(ModelSerializer):

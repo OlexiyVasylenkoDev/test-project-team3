@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
 from datetime import timedelta
+from celery.schedules import crontab
 
 from dotenv import load_dotenv
 from pathlib import Path
@@ -56,6 +57,10 @@ INSTALLED_APPS = [
     'order',
     'review',
     'phonenumber_field',
+    'promotions',
+    'django_celery_beat',
+    'celery',
+    'kombu.transport.redis',
 ]
 
 MIDDLEWARE = [
@@ -144,11 +149,25 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "core.User"
 
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ]
+}
+
+CELERY_BROKER_URL = "redis://redis:6379/0"
+# CELERY_RESULT_BACKEND = "redis://redis:6379"
+# CELERY_IMPORTS = ('promotions.tasks',)
+
+CELERY_ACCEPT_CONTENT = ["application/json"]
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_TASK_SERIALIZER = "json"
+
+CELERY_BEAT_SCHEDULE = {
+    "sample_task": {
+        "task": "ecommerce.promotion.promotion_management",
+        "schedule": crontab(minute="0", hour="1"),
+    },
 }
 
 SIMPLE_JWT = {

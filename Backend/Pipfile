@@ -12,11 +12,14 @@ python-dotenv = "*"
 djangorestframework = "*"
 drf-yasg = "*"
 djangorestframework-simplejwt = "*"
+celery = "*"
+redis = "*"
+django-celery-beat = "*"
+tzdata = "*"
 stripe = "*"
 pyttsx3 = "*"
 speechrecognition = "*"
 pyaudio = "*"
-
 
 [dev-packages]
 

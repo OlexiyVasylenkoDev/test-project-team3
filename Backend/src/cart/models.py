@@ -34,6 +34,12 @@ class CartItem(models.Model):
     def __str__(self):
         return self.product.title
 
+    # @property
+    # def price(self):
+    #     return self.product.price * self.quantity
+
     @property
     def price(self):
+        if self.product.price is None:
+            return self.product.base_price * self.quantity
         return self.product.price * self.quantity

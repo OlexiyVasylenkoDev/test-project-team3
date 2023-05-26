@@ -106,11 +106,11 @@ class OrderUpdateSerializer(serializers.ModelSerializer):
 
     def update(self, instance, validated_data):
         if validated_data["closed_at"]:
-            for i in self.data["order_items"]:
-                order_item = OrderItem.objects.filter(pk=i["id"]).first()
-                product = Product.objects.filter(pk=order_item.goods.pk).first()
+            for i in OrderItem.objects.filter(order=instance):
+                order_item = OrderItem.objects.filter(pk=i.id).first()
+                product = Product.objects.filter(pk=order_item.product.pk).first()
 
-                product.quantity -= order_item.quantity
+                product.count -= order_item.quantity
                 product.save()
 
         return super().update(instance, validated_data)
@@ -123,11 +123,11 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def get_top_sales(self, limit):
         # Отримуємо сумарну кількість продуктів замовлених по кожному товару
-        top_sales = OrderItem.objects.values('goods').annotate(total_quantity=Sum('quantity')).order_by(
+        top_sales = OrderItem.objects.values('product').annotate(total_quantity=Sum('quantity')).order_by(
             '-total_quantity')[:limit]
 
         # Отримуємо ідентифікатори товарів з топ продажів
-        top_product_ids = [sale['goods'] for sale in top_sales]
+        top_product_ids = [sale['product'] for sale in top_sales]
 
         # Отримуємо товари з бази даних, використовуючи ідентифікатори
         top_products = Product.objects.filter(id__in=top_product_ids).order_by(

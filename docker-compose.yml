@@ -10,15 +10,21 @@ services:
     restart: always
     env_file:
       - Backend/.env
+    depends_on:
+      - postgres
 
   frontend:
     build: /frontend/.
     container_name: frontend
     working_dir: /frontend
     ports:
-      - "3000:3000"
+      - "80:80"
     volumes:
       - ./frontend:/frontend
+    restart: always
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+
 
   postgres:
     image: postgres:12.0
@@ -47,6 +53,71 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=admin
     depends_on:
       - postgres
+
+  celery:
+    build: ./
+    container_name: celery
+    command:
+#      - celery -A dev-server worker -l info
+      - ./run_celery.sh
+    volumes:
+      - ./Backend:/Backend
+    restart: always
+    env_file:
+      - Backend/.env
+    depends_on:
+      - redis
+    environment:
+          - DEBUG=1
+          - CELERY_BROKER=redis://redis:6379/0
+          - CELERY_BACKEND=redis://redis:6379
+
+  redis:
+    image: redis
+    container_name: redis
+    restart: on-failure
+    env_file:
+      - Backend/.env
+    depends_on:
+      - backend
+    ports:
+      - 6379:6379
+
+  redis-admin:
+    image: rediscommander/redis-commander:latest
+    container_name: redisadmin
+    hostname: redisadmin
+    ports:
+      - "8092:8081"
+    restart: always
+    env_file:
+      - Backend/.env
+    depends_on:
+      - redis
+
+  celery-beat:
+    container_name: celery_beat
+    restart: always
+    working_dir: /Backend
+    build:
+      context: ./
+    command: celery -A celery beat -l info
+    depends_on:
+      - redis
+      - celery
+    volumes:
+      - ./Backend/src:/Backend/src
+
+
+  flower:
+    container_name: flower
+    image: mher/flower
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - FLOWER_PORT=8888
+    ports:
+      - 8888:8888
+
 
 volumes:
   local_postgres_data: { }

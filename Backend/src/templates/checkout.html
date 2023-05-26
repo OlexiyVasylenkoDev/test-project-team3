@@ -1,0 +1,83 @@
+<!-- checkout.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Checkout</title>
+</head>
+<body>
+<div>
+    {% for i in items %}
+        {{ i }}
+    {% endfor %}
+</div>
+<br>
+<hr>
+
+<b>Customer info</b>
+<form method="post" action="{% url 'checkout' %}">
+    {% csrf_token %}
+    <div>
+        <label for="id_first_name">First Name:</label>
+        <input type="text" id="id_first_name" name="first_name" required>
+    </div>
+    <div>
+        <label for="id_last_name">Last Name:</label>
+        <input type="text" id="id_last_name" name="last_name" required>
+    </div>
+    <div>
+        <label for="id_email">Email:</label>
+        <input type="email" id="id_email" name="email" required>
+    </div>
+    <div>
+        <label for="id_phone">Phone:</label>
+        <input type="tel" id="id_phone" name="phone" required>
+    </div>
+{#    <div>#}
+{#        <label for="id_quantity">quantity:</label>#}
+{#        <input id="id_quantity" name="quantity" type="number" required></input>#}
+{#    </div>#}
+    <div>
+        <label for="id_address">Address:</label>
+        <input id="id_address" name="address" required></input>
+    </div>
+    <input id="id_total_sum" name="total_sum" value="{{ total_sum }}">
+
+    <button type="submit">Proceed to Payment</button>
+</form>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    var form = document.querySelector('form');
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        var data = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: data,
+            headers: {
+                'X-CSRFToken': form.querySelector('input[name="csrfmiddlewaretoken"]').value
+            }
+        })
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                var stripe = Stripe('{{ checkout_public_key }}');
+                stripe.redirectToCheckout({
+                    sessionId: data.sessionId
+                }).then(function (result) {
+                    // If redirectToCheckout fails
+                    if (result.error) {
+                        var displayError = document.getElementById('error-message');
+                        displayError.textContent = result.error.message;
+                    }
+                });
+            });
+    });
+</script>
+
+</body>
+</html>

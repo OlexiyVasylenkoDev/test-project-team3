@@ -33,7 +33,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://d0a3-194-44-223-132.ngrok-free.app/"
+    os.getenv("NGROK_SERVER")
 ]
 
 # Application definition

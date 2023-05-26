@@ -61,6 +61,8 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'celery',
     'kombu.transport.redis',
+    'tailwind',
+    'theme'
 ]
 
 MIDDLEWARE = [
@@ -182,3 +184,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'image')
 STRIPE_TEST_PUBLIC_KEY = os.getenv('STRIPE_TEST_PUBLIC_KEY')
 STRIPE_TEST_SECRET_KEY = os.getenv('STRIPE_TEST_SECRET_KEY')
 STRIPE_WEBHOOK_SECRET = os.getenv('STRIPE_WEBHOOK_SECRET')
+
+# Tailwind
+TAILWIND_APP_NAME = 'theme'

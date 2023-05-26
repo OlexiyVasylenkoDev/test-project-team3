@@ -1,0 +1,37 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Jost:wght@900&display=swap");
+
+.item_wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  gap: 10px;
+
+  width: 240px;
+  height: 40px;
+  position: relative;
+
+  .icons {
+    position: absolute;
+    left: 5%;
+    bottom: 25%;
+  }
+
+  .title {
+    position: absolute;
+    left: 48px;
+    font-family: "Inter";
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+
+    color: #000000;
+  }
+
+  .more {
+    position: absolute;
+    right: 0;
+    bottom: 25%;
+  }
+}

@@ -1,0 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Jost:wght@900&display=swap");
+
+.catalog_btn {
+  display: flex;
+  flex-direction: row;
+  gap: 28px;
+  border: 1px solid white;
+  border-radius: 12px;
+  padding: 8px 55px 8px 16px;
+  align-items: center;
+  margin-top: 8px;
+  font-family: "Inter";
+  font-weight: 400;
+  cursor: pointer;
+}

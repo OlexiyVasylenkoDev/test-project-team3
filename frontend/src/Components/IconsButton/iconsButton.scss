@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Jost:wght@900&display=swap");
+.icons {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding-top: 14px;
+}
+
+.icons_block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.icons_descr {
+  font-family: "Inter";
+  font-weight: 400;
+}
+
+.icons_block:hover {
+  cursor: pointer;
+}

@@ -1,0 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Jost:wght@900&display=swap");
+
+.logo {
+  display: flex;
+  max-width: 1296px;
+  margin: 0 auto;
+  justify-content: space-between;
+  height: 48px;
+
+  .logo_box {
+    display: flex;
+    font-family: "Jost";
+    font-weight: 900;
+    font-size: 28px;
+    gap: 12px;
+    color: #d63a3f;
+    align-items: center;
+  }
+
+  .logo_box:hover {
+    cursor: pointer;
+  }
+
+  .lang {
+    display: flex;
+    align-items: center;
+    color: #000;
+    gap: 15px;
+    font-family: "Inter";
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  .lang:hover {
+    cursor: pointer;
+  }
+
+  .vilka {
+    padding-top: 10px;
+  }
+}

@@ -1,0 +1,45 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Jost:wght@900&display=swap");
+
+.custom_input {
+  position: relative;
+  margin-top: 8px;
+}
+
+.input {
+  font-family: "Inter";
+  font-weight: 400;
+  padding-left: 48px;
+  width: 680px;
+  height: 48px;
+  border-radius: 12px;
+  outline: none;
+}
+
+.btn {
+  position: absolute;
+  right: 0;
+  width: 80px;
+  background-color: #c8d2ff;
+  border: none;
+  cursor: pointer;
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 16px;
+  height: 45px;
+  width: 80px;
+  top: 2px;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.lupa {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+}
+.microphone {
+  position: absolute;
+  top: 15px;
+  right: 90px;
+  cursor: pointer;
+}

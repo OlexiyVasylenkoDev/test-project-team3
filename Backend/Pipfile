@@ -21,6 +21,7 @@ pyttsx3 = "*"
 speechrecognition = "*"
 pyaudio = "*"
 django-cors-headers = "*"
+django-tailwind = "*"
 
 [dev-packages]
 

@@ -62,6 +62,8 @@ INSTALLED_APPS = [
     'celery',
     'kombu.transport.redis',
     'corsheaders',
+    'tailwind',
+    'theme'
 ]
 
 MIDDLEWARE = [
@@ -185,4 +187,8 @@ STRIPE_TEST_PUBLIC_KEY = os.getenv('STRIPE_TEST_PUBLIC_KEY')
 STRIPE_TEST_SECRET_KEY = os.getenv('STRIPE_TEST_SECRET_KEY')
 STRIPE_WEBHOOK_SECRET = os.getenv('STRIPE_WEBHOOK_SECRET')
 
+
 CORS_ORIGIN_ALLOW_ALL = True
+
+# Tailwind
+TAILWIND_APP_NAME = 'theme'

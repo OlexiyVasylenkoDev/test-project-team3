@@ -55,7 +55,7 @@ services:
       - postgres
 
   celery:
-    build: ./
+    build: /Backend/.
     container_name: celery
     command:
 #      - celery -A dev-server worker -l info
@@ -100,7 +100,7 @@ services:
     restart: always
     working_dir: /Backend
     build:
-      context: ./
+      context: /Backend/.
     command: celery -A celery beat -l info
     depends_on:
       - redis

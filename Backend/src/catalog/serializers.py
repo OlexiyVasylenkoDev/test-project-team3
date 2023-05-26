@@ -1,20 +1,9 @@
-from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Q
+from django.db.models import Sum, When, Case
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
-from decimal import Decimal
 
-from promotions.models import Promotion, ProductsOnPromotions
+from order.models import OrderItem
 from catalog.models import Category, Product, CategoryAttribute, ProductAttribute
-
-
-
-class ProductSerializer(ModelSerializer):
-    count = serializers.DecimalField(max_digits=10, decimal_places=2)
-
-    class Meta:
-        model = Product
-        fields = ["title", "description", "category", "count", "image", "price", "is_active", "attributes"]
 
 
 class ProductAttributeSerializer(ModelSerializer):
@@ -31,15 +20,29 @@ class ProductAttributeSerializer(ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    count = serializers.DecimalField(max_digits=10, decimal_places=2)
     promo_price = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
         fields = ['id', 'title', 'description', 'category', 'count', 'image', 'base_price', 'promo_price', 'is_active']
 
-
     def get_promo_price(self, obj):
         return obj.price
+
+    def get_top_sales(self, limit):
+        # Отримуємо сумарну кількість продуктів замовлених по кожному товару
+        top_sales = OrderItem.objects.values('goods').annotate(total_quantity=Sum('quantity')).order_by(
+            '-total_quantity')[:limit]
+
+        # Отримуємо ідентифікатори товарів з топ продажів
+        top_product_ids = [sale['goods'] for sale in top_sales]
+
+        # Отримуємо товари з бази даних, використовуючи ідентифікатори
+        top_products = Product.objects.filter(id__in=top_product_ids).order_by(
+            Case(*[When(id=id, then=pos) for pos, id in enumerate(top_product_ids)]))
+
+        return top_products
 
 
 class CategorySerializer(ModelSerializer):
